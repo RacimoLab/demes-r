@@ -1,21 +1,5 @@
-filepath <- "../ex03.yaml"
-
-
-#' Load and Validate a Demes Model
-#'
-#' More description
-#'
-#' @param filepath
-#'
-#' @return \code{out}
-#' @export
-#'
-#' @examples
-load_deme <- function(filepath){
-
-  inp <- yaml::read_yaml(filepath)
+validate_deme <- function(inp){
   out <- inp
-
 
   # Check for time_units and generation_time
   if (is.null(inp$time_units)){
@@ -27,9 +11,9 @@ load_deme <- function(filepath){
     out$doi<- list()
   }
 
-  # if (is.null(inp$metadata)){
-  #   out$metadata <- list()
-  # }
+  if (is.null(inp$metadata)){
+    out$metadata <- list()
+  }
 
   for (i in 1:length(inp$demes)){
     if (is.null(inp$demes[[i]]$ancestors)){
@@ -92,20 +76,3 @@ load_deme <- function(filepath){
 
   return(out)
 }
-
-test_out <- load_deme(filepath)
-#
-# metadata: {}
-# demes:
-#   - name: A
-# description: ''
-# start_time: .inf
-# ancestors: []
-# proportions: []
-# epochs:
-#   - {end_time: 0, start_size: 1000, end_size: 1000, size_function: constant, selfing_rate: 0,
-#     cloning_rate: 0}
-# migrations: []
-# pulses: []
-
-# Currently the python does not print the doi, but it should, the internal python representation and the printed python thing do not match, so use that for comparison
